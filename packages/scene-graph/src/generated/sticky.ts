@@ -34,6 +34,33 @@ export const STICKY_COLORS = {
 
 export const DEFAULT_STICKY_COLOR: Color = STICKY_COLORS.blue
 
+/** FigJam's body text sizes, each with the tracking it sets, as a fraction of the size. */
+export const STICKY_TEXT_SIZES = {
+  small: { fontSize: 16, tracking: -0.011 },
+  medium: { fontSize: 24, tracking: -0.019 },
+  large: { fontSize: 40, tracking: -0.022 },
+  extraLarge: { fontSize: 64, tracking: -0.022 },
+  huge: { fontSize: 96, tracking: -0.023 }
+} as const
+
+export type StickyTextSize = keyof typeof STICKY_TEXT_SIZES
+
+/** A body's text at a size preset: its line stays one and a half times the size. */
+export function stickyBodySizeFields(size: StickyTextSize): Partial<SceneNode> {
+  const { fontSize, tracking } = STICKY_TEXT_SIZES[size]
+  return { fontSize, lineHeight: fontSize * 1.5, letterSpacing: fontSize * tracking }
+}
+
+/** The preset a body's text is closest to, as FigJam's size menu shows a rescaled note's. */
+export function stickyTextSize(body: Pick<SceneNode, 'fontSize'>): StickyTextSize {
+  const sizes = Object.entries(STICKY_TEXT_SIZES) as [StickyTextSize, { fontSize: number }][]
+  return sizes.reduce((best, entry) =>
+    Math.abs(entry[1].fontSize - body.fontSize) < Math.abs(best[1].fontSize - body.fontSize)
+      ? entry
+      : best
+  )[0]
+}
+
 function solid(color: Color, opacity = 1): Fill {
   return { type: 'SOLID', color: { ...color }, opacity, visible: true }
 }
@@ -113,6 +140,17 @@ export function stickyScale(author: Pick<SceneNode, 'fontSize'> | undefined): nu
   return author ? author.fontSize / STICKY_AUTHOR_FONT_SIZE : 1
 }
 
+/** A note's width at a scale, square or wide, as FigJam's side handles switch between them. */
+export function stickyWidth(scale: number, wide: boolean): number {
+  return (wide ? STICKY_WIDE_WIDTH : STICKY_SIZE) * scale
+}
+
+/** Whether a note is wide: nearer FigJam's wide width than its square one at its scale. */
+export function isWideSticky(graph: SceneGraph, sticky: SceneNode): boolean {
+  const scale = stickyScale(stickySublayers(graph, sticky)?.author)
+  return sticky.width > ((STICKY_SIZE + STICKY_WIDE_WIDTH) / 2) * scale
+}
+
 export interface StickySublayers {
   body: SceneNode
   author: SceneNode
@@ -181,7 +219,6 @@ export function createSticky(
     height: size,
     fills: [solid(content.color ?? DEFAULT_STICKY_COLOR)],
     effects: stickyShadows(),
-    autoRename: false,
     ...stickyFrameFields(scale),
     ...props
   })
