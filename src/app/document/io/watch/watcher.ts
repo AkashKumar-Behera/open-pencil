@@ -1,4 +1,4 @@
-import { watchBrowserFile, watchTauriFile } from '@/app/document/io/watch-targets'
+import { watchBrowserFile, watchTauriFile } from '@/app/document/io/watch/targets'
 import { IS_TAURI } from '@/constants'
 
 type FileWatchOptions = {

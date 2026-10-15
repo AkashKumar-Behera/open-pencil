@@ -2,7 +2,7 @@ import { describe, expect, test } from 'bun:test'
 
 import { expectDefined } from '#tests/helpers/assert'
 
-import { createAPI } from './helpers'
+import { createAPI } from '../helpers'
 
 describe('grouping', () => {
   test('group creates GROUP with children', () => {

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 
-import { asPageNode, createAPI } from './helpers'
+import { asPageNode, createAPI } from '../helpers'
 
 describe('FigmaAPI grouping compatibility', () => {
   test('group accepts parent and index and returns a group node', () => {

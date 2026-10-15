@@ -2,7 +2,7 @@ import type { Editor } from '@open-pencil/core/editor'
 import { isSVGMarkup } from '@open-pencil/core/io'
 import type { Vector } from '@open-pencil/scene-graph/primitives'
 
-import { matchingClipboardSnapshot } from './memory'
+import { matchingClipboardSnapshot } from '../memory'
 
 export async function pasteClipboardHTML(
   editor: Editor,

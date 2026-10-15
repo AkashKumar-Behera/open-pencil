@@ -8,8 +8,8 @@ import {
   downloadNameFromPath,
   figDownloadName
 } from '@/app/document/io/names'
-import { createSaveActions } from '@/app/document/io/save'
-import { createDocumentSourceState } from '@/app/document/io/source-state'
+import { createSaveActions } from '@/app/document/io/save/actions'
+import { createDocumentSourceState } from '@/app/document/io/source/state'
 import type { DocumentSourceAccess } from '@/app/document/io/types'
 import { createDocumentRecovery } from '@/app/document/recovery'
 import { recoveryEnabled } from '@/app/document/recovery/preferences'

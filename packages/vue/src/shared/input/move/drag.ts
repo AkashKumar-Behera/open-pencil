@@ -15,7 +15,7 @@ export { duplicateAndDrag } from '#vue/shared/input/duplicate-drag'
 import type { Editor } from '@open-pencil/core/editor'
 
 import { flowBlockBounds, flowOrder, flowSlot, type FlowDrag } from '#vue/shared/input/flow-reorder'
-import { applyMoveSnap } from '#vue/shared/input/move-snap'
+import { applyMoveSnap } from '#vue/shared/input/move/snap'
 import type { DragMove } from '#vue/shared/input/types'
 
 const AUTO_LAYOUT_REORDER_CLICK_SLOP = 3

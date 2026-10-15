@@ -28,7 +28,7 @@ import { fontFaceDemand, fontResolver, missingGlyphCharacters } from '#core/text
 import { expectDefined } from '#tests/helpers/assert'
 import { repoPath } from '#tests/helpers/paths'
 
-import { asDouble, expectRgbaPixels } from './helpers'
+import { asDouble, expectRgbaPixels } from '../helpers'
 
 function createMockCanvas() {
   return {

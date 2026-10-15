@@ -1,7 +1,7 @@
 import * as v from 'valibot'
 
-import { recordDiagnostic } from '../recorder'
-import type { DiagnosticEventInput } from '../types'
+import { recordDiagnostic } from '@/app/diagnostics/recorder'
+import type { DiagnosticEventInput } from '@/app/diagnostics/types'
 
 const storageFailureSchema = v.object({
   operation: v.picklist(['upload', 'download', 'delete', 'list']),

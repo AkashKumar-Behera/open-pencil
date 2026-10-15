@@ -2,10 +2,10 @@ import { uniq } from 'es-toolkit/array'
 
 import type { SceneGraph } from '@open-pencil/scene-graph'
 
+import { applyDocumentChange, type DocumentChange } from '#core/editor/history/document-change'
 import { extractPageContext } from '#core/io/subgraph'
 
-import { applyDocumentChange, type DocumentChange } from './document-change'
-import type { PageSnapshot } from './snapshot'
+import type { PageSnapshot } from './page'
 
 function pageContext(source: SceneGraph, pageId: string, nodeIds: string[]): SceneGraph {
   const graph = extractPageContext(source, pageId, nodeIds)

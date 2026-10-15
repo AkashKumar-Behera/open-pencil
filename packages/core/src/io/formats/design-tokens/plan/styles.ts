@@ -10,18 +10,18 @@ import {
 } from '@open-pencil/scene-graph'
 
 import { tryParseFigmaEffects } from '#core/figma-api/effects'
-
 import {
   decodeColor,
   decodeDimension,
   decodeFontFamily,
   decodeFontWeight,
   referencePath
-} from './decode'
-import type { AliasTarget, ImportSkip, ResolvedReference } from './plan'
-import type { DesignTokenBundle, ReadToken } from './read'
-import { isShadow, shadowTokenValue, typographyValue } from './styles'
-import { OPENPENCIL_EXTENSION } from './types'
+} from '#core/io/formats/design-tokens/decode'
+import type { DesignTokenBundle, ReadToken } from '#core/io/formats/design-tokens/read'
+import { isShadow, shadowTokenValue, typographyValue } from '#core/io/formats/design-tokens/styles'
+import { OPENPENCIL_EXTENSION } from '#core/io/formats/design-tokens/types'
+
+import type { AliasTarget, ImportSkip, ResolvedReference } from './'
 
 /** A text or effect style the import makes or updates. */
 export interface PlannedStyle {

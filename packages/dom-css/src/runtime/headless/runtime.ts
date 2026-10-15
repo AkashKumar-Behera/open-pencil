@@ -1,10 +1,10 @@
+import { serializeHTML } from '#dom-css/export/html'
+import { INLINE_TAGS } from '#dom-css/import/flow'
+import { parseStyleAttribute } from '#dom-css/import/style-attribute'
+import type { CSSRuntime, DesignDocument, DesignElement, DesignNode } from '#dom-css/types'
 import { parseFragment, type DefaultTreeAdapterTypes } from 'parse5'
 
-import { serializeHTML } from '../export/html'
-import { INLINE_TAGS } from '../import/flow'
-import { parseStyleAttribute } from '../import/style-attribute'
-import type { CSSRuntime, DesignDocument, DesignElement, DesignNode } from '../types'
-import { computeHeadlessStyles } from './headless-css'
+import { computeHeadlessStyles } from './styles'
 
 function attrsToRecord(attrs: DefaultTreeAdapterTypes.Element['attrs']): Record<string, string> {
   const result: Record<string, string> = {}

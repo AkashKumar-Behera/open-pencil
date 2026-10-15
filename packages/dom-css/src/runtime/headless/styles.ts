@@ -1,3 +1,9 @@
+import type {
+  DesignDocument,
+  DesignElement,
+  DesignNode,
+  DesignStyleDeclaration
+} from '#dom-css/types'
 import {
   parse,
   type CSSGroupingRuleLike,
@@ -7,8 +13,6 @@ import {
 
 import { tryParseColor } from '@open-pencil/scene-graph/color'
 import { parseCSSNumber, splitCSSValue } from '@open-pencil/scene-graph/css'
-
-import type { DesignDocument, DesignElement, DesignNode, DesignStyleDeclaration } from '../types'
 
 interface HeadlessCSSRule {
   selector: string

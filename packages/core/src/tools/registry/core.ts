@@ -1,7 +1,7 @@
-import { diffChanges, diffCreate, diffVisual, evalCode } from './analyze'
-import { calc } from './calc'
-import { render } from './create'
-import { describe } from './describe'
+import { diffChanges, diffCreate, diffVisual, evalCode } from '#core/tools/analyze'
+import { calc } from '#core/tools/calc'
+import { render } from '#core/tools/create'
+import { describe } from '#core/tools/describe'
 import {
   setFill,
   setLayout,
@@ -11,12 +11,12 @@ import {
   setText,
   setTextProperties,
   updateNode
-} from './modify'
-import { diffJSX, findNodes, getJSX, getNode, getSelection } from './read'
-import type { ToolDef } from './schema'
-import { stockPhoto } from './stock-photo'
-import { batchUpdate, deleteNode, nodeResize, reparentNode } from './structure'
-import { viewportZoomToFit } from './vector'
+} from '#core/tools/modify'
+import { diffJSX, findNodes, getJSX, getNode, getSelection } from '#core/tools/read'
+import type { ToolDef } from '#core/tools/schema'
+import { stockPhoto } from '#core/tools/stock-photo'
+import { batchUpdate, deleteNode, nodeResize, reparentNode } from '#core/tools/structure'
+import { viewportZoomToFit } from '#core/tools/vector'
 
 /**
  * Core tools registered by default in AI chat (26 tools, ~5K schema tokens).

@@ -18,10 +18,15 @@ import {
   type DecodedValue,
   type DecodedVariable,
   type DecodeFailure
-} from './decode'
-import { pathName } from './paths'
-import { planStyles, type PlannedStyle } from './plan-styles'
-import type { DesignTokenBundle, ReadCollection, ReadToken } from './read'
+} from '#core/io/formats/design-tokens/decode'
+import { pathName } from '#core/io/formats/design-tokens/paths'
+import type {
+  DesignTokenBundle,
+  ReadCollection,
+  ReadToken
+} from '#core/io/formats/design-tokens/read'
+
+import { planStyles, type PlannedStyle } from './styles'
 
 /** Where an imported collection goes: a new collection, an existing one, or nowhere. */
 export type CollectionTarget =
