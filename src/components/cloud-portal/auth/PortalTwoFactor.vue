@@ -30,7 +30,7 @@ const emit = defineEmits<{
   passkey: []
 }>()
 
-const ui = portalForm()
+const ui = portalForm({ size: 'lg' })
 const messages = useCloudPortalMessages()
 const code = ref('')
 </script>
@@ -47,6 +47,7 @@ const code = ref('')
     <form :class="ui.form()" novalidate @submit.prevent="emit('verify', code)">
       <AppInput
         v-model="code"
+        size="lg"
         :inputmode="method === 'authenticator' ? 'numeric' : 'text'"
         autocomplete="one-time-code"
         :aria-label="
@@ -57,28 +58,38 @@ const code = ref('')
       />
       <AppButton
         type="submit"
+        size="lg"
         color="primary"
         variant="solid"
-        size="lg"
+        :class="ui.submit()"
         :loading="verifying"
-        :ui="{ base: ui.submit() }"
       >
         {{ messages.continue }}
       </AppButton>
     </form>
-    <div class="flex flex-wrap items-center justify-between gap-2">
-      <AppButton size="xs" variant="link" @click="emit('switchMethod')">
+    <template #aside>
+      <AppButton
+        size="lg"
+        color="primary"
+        variant="link"
+        :class="ui.inlineLink()"
+        @click="emit('switchMethod')"
+      >
         {{ method === 'authenticator' ? messages.useRecoveryCode : messages.useAuthenticator }}
       </AppButton>
-      <AppButton
-        v-if="passkeys"
-        size="xs"
-        variant="link"
-        :disabled="verifying"
-        @click="emit('passkey')"
-      >
-        {{ messages.usePasskey }}
-      </AppButton>
-    </div>
+      <template v-if="passkeys">
+        <span aria-hidden="true">·</span>
+        <AppButton
+          size="lg"
+          color="primary"
+          variant="link"
+          :class="ui.inlineLink()"
+          :disabled="verifying"
+          @click="emit('passkey')"
+        >
+          {{ messages.usePasskey }}
+        </AppButton>
+      </template>
+    </template>
   </PortalPublicLayout>
 </template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { omit } from 'es-toolkit'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import type { CloudSocialProvider } from '@open-pencil/cloud/client'
@@ -59,6 +60,14 @@ async function submit(input: { name: string; email: string; password: string }) 
       return
     }
     const result = await portal.auth.withEmail({ email: input.email, password: input.password })
+    if (!result.ok && result.failure === 'email-not-verified') {
+      // The page explains it and sends the link again on request.
+      await router.push({
+        name: 'check-email',
+        query: { email: input.email, redirect: redirect.value }
+      })
+      return
+    }
     if (!result.ok) {
       error.value = failure(result.failure)
       return
@@ -73,6 +82,17 @@ async function submit(input: { name: string; email: string; password: string }) 
     submitting.value = false
   }
 }
+
+// The editor's sign-in sends a provider along when the person already chose one there.
+onMounted(() => {
+  const provider = authentication.value.socialProviders.find(
+    (candidate) => candidate === route.query.provider
+  )
+  if (!provider || error.value || mode.value !== 'sign-in') return
+  // Without the provider in the address, Back from the provider's page shows this page again
+  // instead of sending the person straight back to the provider.
+  void router.replace({ query: omit(route.query, ['provider']) }).then(() => withProvider(provider))
+})
 
 function switchMode() {
   error.value = null

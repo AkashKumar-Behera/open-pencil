@@ -19,7 +19,7 @@ const { failure } = usePortalFailureMessages()
 const token = computed(() => (typeof route.query.token === 'string' ? route.query.token : null))
 const redirect = computed(() => continuationPath(route.query.redirect))
 const minimum = computed(
-  () => portal.discovery.authentication.emailPassword?.minimumPasswordLength ?? 15
+  () => portal.discovery.authentication.emailPassword?.minimumPasswordLength ?? 8
 )
 const submitting = ref(false)
 const error = ref<string | null>(
@@ -60,9 +60,14 @@ async function choose(password: string) {
     :heading="messages.resetSentTitle"
     :description="messages.resetSentDescription({ email: sentTo })"
   >
-    <template #icon><icon-lucide-mail-check class="size-5" /></template>
+    <template #icon><icon-lucide-mail-check class="size-6" /></template>
     <template #actions>
-      <AppButton variant="ghost" @click="router.replace({ name: 'sign-in', query: { redirect } })">
+      <AppButton
+        size="lg"
+        variant="outline"
+        class="w-full"
+        @click="router.replace({ name: 'sign-in', query: { redirect } })"
+      >
         {{ messages.backToSignIn }}
       </AppButton>
     </template>

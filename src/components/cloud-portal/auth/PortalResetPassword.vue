@@ -6,6 +6,7 @@ import { useCloudPortalMessages } from '@open-pencil/vue'
 import AppButton from '@/components/ui/button/AppButton.vue'
 import AppAlert from '@/components/ui/feedback/AppAlert.vue'
 import AppInput from '@/components/ui/input/AppInput.vue'
+import AppPasswordInput from '@/components/ui/input/AppPasswordInput.vue'
 import { portalForm } from '@/theme/cloud-portal/form'
 
 import PortalPublicLayout from '../layout/PortalPublicLayout.vue'
@@ -14,7 +15,7 @@ import PortalPublicLayout from '../layout/PortalPublicLayout.vue'
 const {
   host,
   step,
-  minimumPasswordLength = 15,
+  minimumPasswordLength = 8,
   submitting = false,
   error = null
 } = defineProps<{
@@ -26,7 +27,7 @@ const {
 }>()
 const emit = defineEmits<{ request: [email: string]; choose: [password: string]; back: [] }>()
 
-const ui = portalForm()
+const ui = portalForm({ size: 'lg' })
 const messages = useCloudPortalMessages()
 const value = ref('')
 </script>
@@ -48,11 +49,20 @@ const value = ref('')
           {{ step === 'request' ? messages.email : messages.newPassword }}
         </label>
         <AppInput
+          v-if="step === 'request'"
           id="portal-reset"
           v-model="value"
-          :type="step === 'request' ? 'text' : 'password'"
-          :inputmode="step === 'request' ? 'email' : undefined"
-          :autocomplete="step === 'request' ? 'email' : 'new-password'"
+          size="lg"
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+        />
+        <AppPasswordInput
+          v-else
+          id="portal-reset"
+          v-model="value"
+          size="lg"
+          autocomplete="new-password"
         />
         <p v-if="step === 'choose'" :class="ui.hint()">
           {{ messages.passwordHint({ count: minimumPasswordLength }) }}
@@ -60,19 +70,25 @@ const value = ref('')
       </div>
       <AppButton
         type="submit"
+        size="lg"
         color="primary"
         variant="solid"
-        size="lg"
+        :class="ui.submit()"
         :loading="submitting"
-        :ui="{ base: ui.submit() }"
       >
         {{ step === 'request' ? messages.sendLink : messages.savePassword }}
       </AppButton>
     </form>
-    <template #footer>
-      <AppButton size="xs" variant="link" @click="emit('back')">{{
-        messages.backToSignIn
-      }}</AppButton>
+    <template #aside>
+      <AppButton
+        size="lg"
+        color="primary"
+        variant="link"
+        :class="ui.inlineLink()"
+        @click="emit('back')"
+      >
+        {{ messages.backToSignIn }}
+      </AppButton>
     </template>
   </PortalPublicLayout>
 </template>
